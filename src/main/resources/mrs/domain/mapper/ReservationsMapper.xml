@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mrs.domain.mapper.ReservationsMapper">
+  <resultMap id="BaseResultMap" type="mrs.domain.model.ReservationEx">
+    <id column="reservation_id" jdbcType="INTEGER" property="reservationId" />
+    <result column="start_time" jdbcType="TIME" property="startTime" />
+    <result column="end_time" jdbcType="TIME" property="endTime" />
+    <result column="reserved_date" jdbcType="DATE" property="reservedDate" />
+    <result column="room_id" jdbcType="INTEGER" property="roomId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="member_count" jdbcType="INTEGER" property="memberCount" />
+    <result column="remind_date" jdbcType="DATE" property="remindDate" />
+    <result column="remind_time" jdbcType="TIME" property="remindTime" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+  </resultMap>
+  <resultMap id="ReservableRoomKey" type="mrs.domain.model.mybatis.ReservableRoomKey">
+    <result column="reserved_date" jdbcType="DATE" property="reservedDate" />
+    <result column="room_id" jdbcType="INTEGER" property="roomId" />
+  </resultMap>
+  <select id="selectReservationExList" resultMap="BaseResultMap">
+    SELECT
+	    A.reservation_id,
+	    A.start_time,
+	    A.end_time,
+	    A.reserved_date,
+	    A.room_id,
+	    A.user_id,
+	    A.memo,
+	    A.member_count,
+	    A.remind_date,
+	    A.remind_time,
+	    B.first_name,
+	    B.last_name
+    FROM
+      public.reservation A
+      INNER JOIN public.usr B
+        ON A.user_id = B.user_id
+    WHERE
+      A.room_id = #{room_id}
+      AND A.reserved_date = #{reserved_date}
+    ORDER BY
+      A.start_time ASC
+  </select>
+
+  <select id="selectReservableRoomForUpdate" resultMap="ReservableRoomKey">
+    SELECT
+	    A.reserved_date,
+	    A.room_id
+    FROM
+      public.reservable_room A
+    WHERE
+      A.room_id = #{room_id}
+      AND A.reserved_date = #{reserved_date}
+    FOR UPDATE
+  </select>
+</mapper>

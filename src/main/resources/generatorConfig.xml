@@ -1,0 +1,37 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="dsql" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+
+    <jdbcConnection driverClass="org.postgresql.Driver"
+        connectionURL="jdbc:postgresql://localhost:5432/mrs"
+        userId="mrs"
+        password="mrs" />
+
+    <javaTypeResolver>
+        <property name="forceBigDecimals" value="true"/>
+        <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="mrs.domain.model.mybatis" targetProject="mrs_mybatis/src/main/java"/>
+
+    <sqlMapGenerator targetPackage="mrs.domain.mapper.mybatis" targetProject="mrs_mybatis/src/main/resources/" />
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mrs.domain.mapper.mybatis" targetProject="mrs_mybatis/src/main/java/"/>
+
+    <!-- 全てのテーブルが対象 -->
+    <table tableName="usr">
+        <columnOverride column="role_name" javaType="mrs.domain.model.RoleName" jdbcType="VARCHAR" typeHandler="mrs.config.mybatis.handler.GenericTypeHandler"></columnOverride>
+    </table>
+    <table schema="public" tableName="meeting_room">
+        <generatedKey column="room_id" sqlStatement="JDBC" identity="true" />
+    </table>
+    <table schema="public" tableName="reservation">
+        <property name="useActualColumnNames" value="false"/>
+        <generatedKey column="reservation_id" sqlStatement="JDBC" identity="true" />
+    </table>
+    <table schema="public" tableName="reservable_room" />
+  </context>
+</generatorConfiguration>

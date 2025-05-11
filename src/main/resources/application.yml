@@ -1,0 +1,20 @@
+spring:
+  application.name: room.reservation
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mrs
+    username: test01
+    password: test01test01
+    driverClassName: org.postgresql.Driver
+    sql-script-encoding: UTF-8
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    mrs.domain.mapper.mybatis: DEBUG

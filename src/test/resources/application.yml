@@ -1,0 +1,17 @@
+spring:
+# jpa(for immemory)
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+# datasource(for immemory)
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:AZ;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
+    username: dev
+    password: dev
+# message
+  messages:
+    basename: messages
+    cache-duration: -1
+    encoding: UTF-8
